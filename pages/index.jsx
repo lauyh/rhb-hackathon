@@ -1,9 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Navbar from '@/src/components/utils/Navbar'
 import AccBalCard from '@/src/components/dashboard/AccountBalCard'
 import { AppTitle } from '@/src/consts/common'
-import { ShoppingCartIcon, BookOpenIcon, BriefcaseIcon, XCircleIcon } from '@heroicons/react/24/outline'
+import {
+    ArrowRightIcon,
+    BookOpenIcon,
+    BriefcaseIcon,
+    ChevronDoubleRightIcon,
+    ClockIcon,
+    ShoppingCartIcon,
+    XCircleIcon,
+} from '@heroicons/react/24/outline'
 
 const ITEMS = [
     {
@@ -161,10 +169,22 @@ const Home = () => {
     const [menuPopup, setMenuPopup] = useState(false)
     const [progress, setProgress] = useState(1)
     const [NW, setNW] = useState(10000)
+    const [CashIn, setCashIn] = useState(0)
     const [CashOut, setCashOut] = useState(0)
+
+    const [workPage, setWorkPage] = useState(false)
+    const [contentWork, setContentWork] = useState(false)
+    const [progressWork, setProgressWork] = useState(false)
+    const [doneWork, setDoneWork] = useState(false)
+
+    const [learnPage, setLearnPage] = useState(false)
+    const [contentLearn, setContentLearn] = useState(false)
 
     const closePopup = () => setFirstPopup(false)
     const toggleMenuPopup = () => setMenuPopup(!menuPopup)
+    const toggleWorkPage = () => setWorkPage(!workPage)
+    const toggleLearnPage = () => setLearnPage(!learnPage)
+
     const handleAddItem = () => {
         if (progress < 7) {
             setProgress(progress + 1)
@@ -174,10 +194,28 @@ const Home = () => {
         toggleMenuPopup()
     }
 
+    const handleDoneWork = () => {
+        setNW(NW + 50)
+        setCashIn(CashIn + 50)
+        setWorkPage(false)
+        setContentWork(false)
+        setProgressWork(false)
+        setDoneWork(false)
+    }
+
     const titleHouse = progress == 7 ? 'Your Dream House is Built!' : 'Build your Dream House'
     const textNW = new Intl.NumberFormat('en-US').format(NW)
     const textTotal = new Intl.NumberFormat('en-US').format(CashOut)
     const textCashOut = CashOut < 0 ? `${textTotal} (Shortfall)` : 0
+    const textCashIn = new Intl.NumberFormat('en-US').format(CashIn)
+
+    useEffect(() => {
+        if (progressWork) {
+            setTimeout(() => {
+                setDoneWork(true)
+            }, 1500)
+        }
+    }, [progressWork])
 
     return (
         <>
@@ -185,32 +223,226 @@ const Home = () => {
             <Navbar />
             {/* Content */}
             <div className="relative bg-slate-50 h-[calc(100%-66px)]">
-                {firstPopup && <Popup {...{ closePopup }} />}
-                {menuPopup && <PurchaseMenu {...{ toggleMenuPopup, handleAddItem }} />}
-                <AccBalCard netWorth={textNW} cashOut={textCashOut} totalFlow={textTotal} />
-                <h1 className="font-sans text-2xl text-center font-semibold italic text-gray-400">{titleHouse}</h1>
-                <div className="w-full absolute bottom-[200px] flex justify-center">
-                    <Image src={`/house-${progress}.png`} width={196} height={196} alt="House 1" />
-                </div>
-                <div className="w-full absolute bottom-[40px] text-center">
-                    <button
-                        className="inline-flex items-center rounded-md border border-transparent bg-slate-200 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-300 focus:outline-none mb-4"
-                        onClick={toggleMenuPopup}
-                    >
-                        <ShoppingCartIcon className="mr-3" width={24} height={24} />
-                        Purchase
-                    </button>
-                    <div className="flex justify-center items-center">
-                        <button className="inline-flex items-center rounded-md border border-transparent bg-blue-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none mr-2">
-                            <BookOpenIcon className="mr-3" width={24} height={24} />
-                            Learn
-                        </button>
-                        <button className="inline-flex items-center rounded-md border border-transparent bg-blue-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none">
-                            <BriefcaseIcon className="mr-3" width={24} height={24} />
-                            Work
-                        </button>
+                {progressWork ? (
+                    <div className="p-4 pt-16">
+                        {doneWork ? (
+                            <>
+                                <div className="flex justify-center items-center mb-8">
+                                    <Image src="/melisa-7.png" width={200} height={200} alt="Melisa" />
+                                </div>
+                                <p className="text-2xl text-center font-medium">VRM 50 Received!</p>
+                                <div className="text-center mt-8">
+                                    <button
+                                        className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-green-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-600 focus:outline-none"
+                                        onClick={handleDoneWork}
+                                    >
+                                        Return to Home
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className="flex justify-center items-center mb-8">
+                                    <Image src="/melisa-8.png" width={200} height={200} alt="Melisa" />
+                                </div>
+                                <div className="flex items-center bg-emerald-100 text-emerald-700 rounded-lg border-2 border-emerald-600 p-4 my-4">
+                                    <ClockIcon width={24} height={24} />
+                                    <p className="text-lg font-semibold ml-2">Chore in progress...</p>
+                                </div>
+                                <div className="text-center mt-8">
+                                    <button className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none">
+                                        Cancel Chore
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </div>
-                </div>
+                ) : contentWork ? (
+                    <div className="p-4">
+                        <div className="flex justify-center items-center mb-4">
+                            <button className="w-1/2 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-300 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none mr-2">
+                                Easy Chores
+                            </button>
+                            <button className="w-1/2 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none">
+                                Hard Chores
+                            </button>
+                        </div>
+                        <div className="flex justify-end mb-8">
+                            <button className="inline-flex justify-center items-center rounded-l-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none">
+                                Prev
+                            </button>
+                            <button className="inline-flex justify-center items-center rounded-r-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none">
+                                Next
+                            </button>
+                        </div>
+                        <div className="bg-white shadow-lg shadow-gray-400 rounded-b-md">
+                            <div className="w-full h-[240px] border-2 border-gray-400">
+                                <Image src="/dish.png" width={420} height={240} alt="Dishwashing" />
+                            </div>
+                            <div className="p-4">
+                                <p className="text-lg font-semibold mb-2">Wash Dishes</p>
+                                <p className="mb-6">Help out the family by washing the dishes after family meal!</p>
+                                <div className="flex items-center mb-8">
+                                    <button className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-green-500 px-6 py-1 mr-4 text-sm font-medium text-white shadow-sm focus:outline-none">
+                                        15 minutes
+                                    </button>
+                                    <button className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-slate-400 px-6 py-1 text-sm font-medium text-white shadow-sm focus:outline-none">
+                                        Easy
+                                    </button>
+                                </div>
+                                <div
+                                    className="w-full flex justify-between items-center rounded-3xl border border-transparent bg-indigo-600 px-2 py-2 pr-3 mb-4 text-sm font-medium text-white shadow-sm focus:outline-none cursor-pointer"
+                                    onClick={() => setProgressWork(true)}
+                                >
+                                    <div className="flex justify-between items-center">
+                                        <div className="flex justify-between items-center rounded-3xl bg-indigo-400 px-4 py-1 mr-2">
+                                            VRM50
+                                        </div>
+                                        Let&apos;s Start Working!
+                                    </div>
+                                    <ArrowRightIcon width={24} height={24} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : contentLearn ? (
+                    <div className="p-4">
+                        <div className="flex justify-center items-center mb-4">
+                            <button className="w-1/3 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-300 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none mr-2">
+                                Time
+                            </button>
+                            <button className="w-1/3 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none mr-2">
+                                Habit
+                            </button>
+                            <button className="w-1/3 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-300 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none">
+                                Save
+                            </button>
+                        </div>
+                        <div className="flex justify-end mb-8">
+                            <button className="inline-flex justify-center items-center rounded-l-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none">
+                                Prev
+                            </button>
+                            <button className="inline-flex justify-center items-center rounded-r-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none">
+                                Next
+                            </button>
+                        </div>
+                        <div className="bg-white shadow-lg shadow-gray-400 rounded-b-md">
+                            <div className="w-full h-[240px] border-2 border-gray-400">
+                                <Image
+                                    src="/learn.png"
+                                    width={420}
+                                    height={236}
+                                    className="h-[236px] object-contain "
+                                    alt="Learning"
+                                />
+                            </div>
+                            <div className="p-4">
+                                <p className="text-lg font-semibold mb-2">Learn Helpful Habits</p>
+                                <p className="mb-6">Read more to learn</p>
+                                <div className="flex items-center mb-8">
+                                    <button className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-green-500 px-6 py-1 mr-4 text-sm font-medium text-white shadow-sm focus:outline-none">
+                                        15 minutes
+                                    </button>
+                                    <button className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-slate-400 px-6 py-1 text-sm font-medium text-white shadow-sm focus:outline-none">
+                                        Easy
+                                    </button>
+                                </div>
+                                <div
+                                    className="w-full flex justify-between items-center rounded-3xl border border-transparent bg-indigo-600 px-2 py-2 pr-3 mb-4 text-sm font-medium text-white shadow-sm focus:outline-none cursor-pointer"
+                                    onClick={() => setProgressWork(true)}
+                                >
+                                    <div className="flex justify-between items-center">
+                                        <div className="flex justify-between items-center rounded-3xl bg-indigo-400 px-4 py-1 mr-2">
+                                            VRM50
+                                        </div>
+                                        Let&apos;s Start Working!
+                                    </div>
+                                    <ArrowRightIcon width={24} height={24} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        {firstPopup && <Popup {...{ closePopup }} />}
+                        {menuPopup && <PurchaseMenu {...{ toggleMenuPopup, handleAddItem }} />}
+                        <AccBalCard netWorth={textNW} cashIn={textCashIn} cashOut={textCashOut} totalFlow={textTotal} />
+                        {workPage ? (
+                            <>
+                                <div className="w-full flex justify-center mt-16 mb-10">
+                                    <Image src="/melisa-8.png" width={200} height={200} alt="Melisa" />
+                                </div>
+                                <div className="text-center">
+                                    <button
+                                        className="inline-flex items-center rounded-3xl border border-transparent bg-blue-600 px-4 py-2 text-lg font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none"
+                                        onClick={() => setContentWork(true)}
+                                    >
+                                        Let&apos;s Earn!
+                                    </button>
+                                </div>
+                            </>
+                        ) : learnPage ? (
+                            <>
+                                <div className="w-full flex justify-center mt-16 mb-10">
+                                    <Image src="/melisa-12.png" width={200} height={200} alt="Melisa" />
+                                </div>
+                                <div className="text-center">
+                                    <button
+                                        className="inline-flex items-center rounded-3xl border border-transparent bg-blue-600 px-4 py-2 text-lg font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none"
+                                        onClick={() => setContentLearn(true)}
+                                    >
+                                        Let&apos;s Learn!
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <h1 className="font-sans text-2xl text-center font-semibold italic text-gray-400">
+                                    {titleHouse}
+                                </h1>
+                                <div className="w-full absolute bottom-[200px] flex justify-center">
+                                    <Image src={`/house-${progress}.png`} width={196} height={196} alt="House 1" />
+                                </div>
+                                <div className="w-full absolute bottom-[40px] text-center">
+                                    {progress == 7 ? (
+                                        <>
+                                            <button className="inline-flex items-center rounded-3xl border border-transparent bg-green-600 px-4 py-2 mb-10 text-lg font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none">
+                                                Next Goal
+                                                <ChevronDoubleRightIcon className="ml-2" width={24} height={24} />
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button
+                                                className="inline-flex items-center rounded-md border border-transparent bg-slate-200 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-300 focus:outline-none mb-4"
+                                                onClick={toggleMenuPopup}
+                                            >
+                                                <ShoppingCartIcon className="mr-3" width={24} height={24} />
+                                                Purchase
+                                            </button>
+                                            <div className="flex justify-center items-center">
+                                                <button
+                                                    className="inline-flex items-center rounded-md border border-transparent bg-blue-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none mr-2"
+                                                    onClick={toggleLearnPage}
+                                                >
+                                                    <BookOpenIcon className="mr-3" width={24} height={24} />
+                                                    Learn
+                                                </button>
+                                                <button
+                                                    className="inline-flex items-center rounded-md border border-transparent bg-blue-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none"
+                                                    onClick={toggleWorkPage}
+                                                >
+                                                    <BriefcaseIcon className="mr-3" width={24} height={24} />
+                                                    Work
+                                                </button>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            </>
+                        )}
+                    </>
+                )}
             </div>
         </>
     )
