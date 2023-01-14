@@ -42,7 +42,7 @@ const Incident = () => {
           </div>
         </div>
       </div>
-      <IncidentModal setNetWorth={setNetWorth}/>IncidentModal
+      <IncidentModal setNetWorth={setNetWorth}/>
     </>
   );
 };

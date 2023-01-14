@@ -76,13 +76,13 @@ const IncidentModal = ({ setNetWorth }) => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box style={style}>
+         <Box style={style}>
           {isCorrectAnswer ? (
             <CorrectMessage />
           ) : (
             <Question setIsCorrectAnswer={setIsCorrectAnswer} />
           )}
-        </Box>
+        </Box> 
       </Modal>
     </>
   );
