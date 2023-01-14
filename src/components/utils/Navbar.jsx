@@ -15,9 +15,12 @@ const Navbar = () => {
             >
                 <Image src="/avatar.png" width={32} height={32} alt="Profile picture" />
             </div>
-            <Drawer anchor="top" open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
+            <Drawer className="text-center" anchor="top" open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
                 <Link href="/">
                     <p className="text-lg mb-2">Home</p>
+                </Link>
+                <Link href="/login">
+                    <p className="text-lg mb-2">Login</p>
                 </Link>
                 <Link href="/incident">
                     <p className="text-lg mb-2">Incident</p>
