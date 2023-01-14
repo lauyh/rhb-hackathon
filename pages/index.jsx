@@ -335,7 +335,7 @@ const Home = () => {
                             <div className="bg-white shadow-lg shadow-gray-400 rounded-b-md">
                                 <div className="w-full flex justify-center items-center">
                                     <Image
-                                        src="/quiz.png"
+                                        src="/quiz1.png"
                                         width={377}
                                         height={485}
                                         className="w-full h-auto object-contain"
