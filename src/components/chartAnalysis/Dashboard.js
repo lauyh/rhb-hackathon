@@ -44,7 +44,7 @@ function a11yProps(index) {
     }
 }
 
-const DashBoard = () => {
+const Dashboard = () => {
     const [value, setValue] = React.useState(0)
 
     const handleChange = (event, newValue) => {
@@ -56,7 +56,7 @@ const DashBoard = () => {
             <Navbar />
             {/* Content */}
             <Container maxWidth="sm">
-                <Typography component="h2" variant="h5">
+                <Typography component="h2" variant="h5" sx={{marginTop: 2}}>
                     Chart Analysis
                 </Typography>
                 <Box
@@ -94,4 +94,4 @@ const DashBoard = () => {
     )
 }
 
-export default DashBoard
+export default Dashboard
