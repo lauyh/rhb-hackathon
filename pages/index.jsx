@@ -179,6 +179,7 @@ const Home = () => {
 
     const [learnPage, setLearnPage] = useState(false)
     const [contentLearn, setContentLearn] = useState(false)
+    const [progressLearn, setProgressLearn] = useState(0)
 
     const closePopup = () => setFirstPopup(false)
     const toggleMenuPopup = () => setMenuPopup(!menuPopup)
@@ -201,6 +202,14 @@ const Home = () => {
         setContentWork(false)
         setProgressWork(false)
         setDoneWork(false)
+    }
+
+    const handleDoneLearn = () => {
+        setNW(NW + 150)
+        setCashIn(CashIn + 150)
+        setLearnPage(false)
+        setContentLearn(false)
+        setProgressLearn(0)
     }
 
     const titleHouse = progress == 7 ? 'Your Dream House is Built!' : 'Build your Dream House'
@@ -307,60 +316,154 @@ const Home = () => {
                     </div>
                 ) : contentLearn ? (
                     <div className="p-4">
-                        <div className="flex justify-center items-center mb-4">
-                            <button className="w-1/3 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-300 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none mr-2">
-                                Time
-                            </button>
-                            <button className="w-1/3 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none mr-2">
-                                Habit
-                            </button>
-                            <button className="w-1/3 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-300 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none">
-                                Save
-                            </button>
-                        </div>
-                        <div className="flex justify-end mb-8">
-                            <button className="inline-flex justify-center items-center rounded-l-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none">
-                                Prev
-                            </button>
-                            <button className="inline-flex justify-center items-center rounded-r-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none">
-                                Next
-                            </button>
-                        </div>
-                        <div className="bg-white shadow-lg shadow-gray-400 rounded-b-md">
-                            <div className="w-full h-[240px] border-2 border-gray-400">
-                                <Image
-                                    src="/learn.png"
-                                    width={420}
-                                    height={236}
-                                    className="h-[236px] object-contain "
-                                    alt="Learning"
-                                />
-                            </div>
-                            <div className="p-4">
-                                <p className="text-lg font-semibold mb-2">Learn Helpful Habits</p>
-                                <p className="mb-6">Read more to learn</p>
-                                <div className="flex items-center mb-8">
-                                    <button className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-green-500 px-6 py-1 mr-4 text-sm font-medium text-white shadow-sm focus:outline-none">
-                                        15 minutes
-                                    </button>
-                                    <button className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-slate-400 px-6 py-1 text-sm font-medium text-white shadow-sm focus:outline-none">
-                                        Easy
+                        {progressLearn == 3 ? (
+                            <>
+                                <div className="flex justify-center items-center mb-8">
+                                    <Image src="/melisa-7.png" width={200} height={200} alt="Melisa" />
+                                </div>
+                                <p className="text-2xl text-center font-medium">VRM 150 Received!</p>
+                                <div className="text-center mt-8">
+                                    <button
+                                        className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-green-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-600 focus:outline-none"
+                                        onClick={handleDoneLearn}
+                                    >
+                                        Return to Home
                                     </button>
                                 </div>
-                                <div
-                                    className="w-full flex justify-between items-center rounded-3xl border border-transparent bg-indigo-600 px-2 py-2 pr-3 mb-4 text-sm font-medium text-white shadow-sm focus:outline-none cursor-pointer"
-                                    onClick={() => setProgressWork(true)}
-                                >
-                                    <div className="flex justify-between items-center">
-                                        <div className="flex justify-between items-center rounded-3xl bg-indigo-400 px-4 py-1 mr-2">
-                                            VRM50
-                                        </div>
-                                        Let&apos;s Start Working!
+                            </>
+                        ) : progressLearn == 2 ? (
+                            <div className="bg-white shadow-lg shadow-gray-400 rounded-b-md">
+                                <div className="w-full flex justify-center items-center">
+                                    <Image
+                                        src="/quiz.png"
+                                        width={377}
+                                        height={485}
+                                        className="w-full h-auto object-contain"
+                                        alt="Quiz"
+                                    />
+                                </div>
+                                <div className="text-center mt-8">
+                                    <button
+                                        className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-green-500 px-4 py-2 mb-6 text-sm font-medium text-white shadow-sm hover:bg-green-600 focus:outline-none"
+                                        onClick={() => setProgressLearn(progressLearn + 1)}
+                                    >
+                                        Next Question
+                                    </button>
+                                </div>
+                            </div>
+                        ) : progressLearn == 1 ? (
+                            <>
+                                <div className="bg-white shadow-lg shadow-gray-400 rounded-b-md">
+                                    <div className="w-full h-[213px] border-2 border-gray-400">
+                                        <Image
+                                            src="/video.png"
+                                            width={420}
+                                            height={210}
+                                            className="h-[210px] object-contain"
+                                            alt="Learning"
+                                        />
                                     </div>
-                                    <ArrowRightIcon width={24} height={24} />
+                                    <div className="p-4">
+                                        <p className="text-lg font-semibold mb-2">
+                                            15 Finance Habits to Master before 2023
+                                        </p>
+                                        <Image
+                                            src="/indv.png"
+                                            width={170}
+                                            height={87}
+                                            className="h-[87px] object-contain mb-2"
+                                            alt="Learning"
+                                        />
+                                        <p className="mb-2 text-sm">
+                                            “Habits are the compound interest of self-improvement.”
+                                        </p>
+                                        <p className="mb-2 text-sm">
+                                            Whether you&apos;re looking to save more money, invest better, or manage
+                                            your finances more effectively in 2023, it all starts with your daily
+                                            habits.
+                                        </p>
+                                        <p className="mb-2 text-sm">
+                                            As James Clear said in Atomic Habits:
+                                            <br />
+                                            “Your habits have a powerful effect on your life. They can be the difference
+                                            between success and failure. They can determine whether you are healthy or
+                                            unhealthy, wealthy or broke.” To help you build better daily financial
+                                            habits, we&apos;ll go over five practical habit-building methods from Atomic
+                                            Habits.
+                                        </p>
+                                        <div
+                                            className="w-full flex justify-between items-center rounded-3xl border border-transparent bg-indigo-600 px-2 py-2 pr-3 mt-4 mb-2 text-sm font-medium text-white shadow-sm focus:outline-none cursor-pointer"
+                                            onClick={() => setProgressLearn(progressLearn + 1)}
+                                        >
+                                            <div className="flex justify-between items-center">
+                                                <div className="flex justify-between items-center rounded-3xl bg-indigo-400 px-4 py-1 mr-2">
+                                                    VRM150
+                                                </div>
+                                                Take Quiz!
+                                            </div>
+                                            <ArrowRightIcon width={24} height={24} />
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className="flex justify-center items-center mb-4">
+                                    <button className="w-1/3 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-300 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none mr-2">
+                                        Time
+                                    </button>
+                                    <button className="w-1/3 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none mr-2">
+                                        Habit
+                                    </button>
+                                    <button className="w-1/3 inline-flex justify-center items-center rounded-md border border-transparent bg-blue-300 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none">
+                                        Save
+                                    </button>
+                                </div>
+                                <div className="flex justify-end mb-8">
+                                    <button className="inline-flex justify-center items-center rounded-l-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none">
+                                        Prev
+                                    </button>
+                                    <button className="inline-flex justify-center items-center rounded-r-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none">
+                                        Next
+                                    </button>
+                                </div>
+                                <div className="bg-white shadow-lg shadow-gray-400 rounded-b-md">
+                                    <div className="w-full h-[240px] border-2 border-gray-400">
+                                        <Image
+                                            src="/learn.png"
+                                            width={420}
+                                            height={236}
+                                            className="h-[236px] object-contain "
+                                            alt="Learning"
+                                        />
+                                    </div>
+                                    <div className="p-4">
+                                        <p className="text-lg font-semibold mb-2">Learn Helpful Habits</p>
+                                        <p className="mb-6">Read more to learn</p>
+                                        <div className="flex items-center mb-8">
+                                            <button className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-green-500 px-6 py-1 mr-4 text-sm font-medium text-white shadow-sm focus:outline-none">
+                                                15 minutes
+                                            </button>
+                                            <button className="inline-flex justify-center items-center rounded-3xl border border-transparent bg-slate-400 px-6 py-1 text-sm font-medium text-white shadow-sm focus:outline-none">
+                                                Easy
+                                            </button>
+                                        </div>
+                                        <div
+                                            className="w-full flex justify-between items-center rounded-3xl border border-transparent bg-indigo-600 px-2 py-2 pr-3 mb-4 text-sm font-medium text-white shadow-sm focus:outline-none cursor-pointer"
+                                            onClick={() => setProgressLearn(progressLearn + 1)}
+                                        >
+                                            <div className="flex justify-between items-center">
+                                                <div className="flex justify-between items-center rounded-3xl bg-indigo-400 px-4 py-1 mr-2">
+                                                    VRM150
+                                                </div>
+                                                Let&apos;s Learning!
+                                            </div>
+                                            <ArrowRightIcon width={24} height={24} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 ) : (
                     <>
