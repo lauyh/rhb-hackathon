@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import Image from 'next/image'
-import Navbar from '@/src/components/utils/Navbar'
 import AccBalCard from '@/src/components/dashboard/AccountBalCard'
+import Navbar from '@/src/components/utils/Navbar'
 import { AppTitle } from '@/src/consts/common'
-import { ShoppingCartIcon, BookOpenIcon, BriefcaseIcon, XCircleIcon } from '@heroicons/react/24/outline'
+import { BookOpenIcon, BriefcaseIcon, ShoppingCartIcon, XCircleIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
+import { useState } from 'react'
 
 const ITEMS = [
     {
@@ -216,4 +216,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Home;
