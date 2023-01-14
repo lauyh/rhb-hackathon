@@ -456,7 +456,7 @@ const Home = () => {
                                                 <div className="flex justify-between items-center rounded-3xl bg-indigo-400 px-4 py-1 mr-2">
                                                     VRM150
                                                 </div>
-                                                Let&apos;s Learning!
+                                                Let&apos;s Learn!
                                             </div>
                                             <ArrowRightIcon width={24} height={24} />
                                         </div>
