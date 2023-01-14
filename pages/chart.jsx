@@ -1,4 +1,4 @@
-import Dashboard from '@/src/components/chartAnalysis/dashBoard'
+import Dashboard from '@/src/components/chartAnalysis/Dashboard'
 
 const Chart = () => {
     return <Dashboard />
