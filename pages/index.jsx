@@ -317,7 +317,7 @@ const Home = () => {
                 ) : contentLearn ? (
                     <div className="p-4">
                         {progressLearn == 3 ? (
-                            <>
+                            <div className="pt-12">
                                 <div className="flex justify-center items-center mb-8">
                                     <Image src="/melisa-7.png" width={200} height={200} alt="Melisa" />
                                 </div>
@@ -330,7 +330,7 @@ const Home = () => {
                                         Return to Home
                                     </button>
                                 </div>
-                            </>
+                            </div>
                         ) : progressLearn == 2 ? (
                             <div className="bg-white shadow-lg shadow-gray-400 rounded-b-md">
                                 <div className="w-full flex justify-center items-center">
