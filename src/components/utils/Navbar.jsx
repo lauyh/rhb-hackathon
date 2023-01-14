@@ -25,6 +25,9 @@ const Navbar = () => {
                 <Link href="/incident">
                     <p className="text-lg mb-2">Incident</p>
                 </Link>
+                <Link href="/chart">
+                    <p className="text-lg mb-2">Chart</p>
+                </Link>
             </Drawer>
         </div>
     )
