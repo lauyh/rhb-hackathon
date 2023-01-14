@@ -7,7 +7,10 @@ const Home = () => {
         <>
             <AppTitle />
             <Navbar />
-            <AccBalCard />
+            {/* Content */}
+            <div className="bg-slate-50 h-[calc(100% - 66px)]">
+                <AccBalCard />
+            </div>
         </>
     )
 }
