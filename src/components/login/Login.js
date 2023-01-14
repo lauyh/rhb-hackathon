@@ -81,7 +81,7 @@ const Login = () => {
                 borderRadius: 5,
               }}
               color="primary"
-              onClick={() => router.push("/main")}
+              onClick={() => router.push("/home")}
             >
               Sign In
             </Button>
